@@ -28,7 +28,7 @@
 							
 							<div class="d-flex justify-content-end align-items-end mb-3">
 								<div>
-									<a href="#">編集</a>
+									<a th:href="@{/admin/houses/__${house.getId()}__/edit}">編集</a>
 								</div>
 							</div>
 							
@@ -124,11 +124,11 @@
 				</div>
 			</main>
 			
-			<!-- フッター -->
-			<div th:replace="~{fragment :: footer}"></div>
-		</div>
-		
-		<!-- Bootstrap -->
-		<div th:replace="~{fragment :: scripts}"></div>
+		<!-- フッター -->
+		<div th:replace="~{fragment :: footer}"></div>
+	</div>
+	
+	<!-- Bootstrap -->
+	<div th:replace="~{fragment :: scripts}"></div>
 </body>
 </html>

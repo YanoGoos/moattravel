@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.moattravel.entity.House;
+import com.example.moattravel.form.HouseEditForm;
 import com.example.moattravel.form.HouseRegisterForm;
 import com.example.moattravel.repository.HouseRepository;
 
@@ -23,25 +24,49 @@ public class HouseService {
 	}
 	
 	@Transactional
-	public void create(HouseRegisterForm houseResisterForm) {
+	public void create(HouseRegisterForm houseRegisterForm) {
 		House house = new House();
-		MultipartFile imageFile = houseResisterForm.getImageFile();
+		MultipartFile imageFile = houseRegisterForm.getImageFile();
 		
 		if(!imageFile.isEmpty()) {
 			String imageName = imageFile.getOriginalFilename();
-			String hashdImageName = generateNewFileName(imageName);
-			Path filePath = Paths.get("src/main/resources/static/storage/" + hashdImageName);
+			String hashedImageName = generateNewFileName(imageName);
+			Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
 			copyImageFile(imageFile, filePath);
-			house.setImageName(hashdImageName);
+			house.setImageName(hashedImageName);
 		}
 		
-		house.setName(houseResisterForm.getName());
-		house.setDescription(houseResisterForm.getDescription());
-		house.setPrice(houseResisterForm.getPrice());
-		house.setCapacity(houseResisterForm.getCapacity());
-		house.setPostalCode(houseResisterForm.getPostalCode());
-		house.setAddress(houseResisterForm.getAddress());
-		house.setPhoneNumber(houseResisterForm.getPhoneNumber());
+		house.setName(houseRegisterForm.getName());
+		house.setDescription(houseRegisterForm.getDescription());
+		house.setPrice(houseRegisterForm.getPrice());
+		house.setCapacity(houseRegisterForm.getCapacity());
+		house.setPostalCode(houseRegisterForm.getPostalCode());
+		house.setAddress(houseRegisterForm.getAddress());
+		house.setPhoneNumber(houseRegisterForm.getPhoneNumber());
+		
+		houseRepository.save(house);
+	}
+	
+	@Transactional
+	public void update(HouseEditForm houseEditForm) {
+		House house = houseRepository.getReferenceById(houseEditForm.getId());
+		MultipartFile imageFile = houseEditForm.getImageFile();
+		
+		if (!imageFile.isEmpty()) {
+			String imageName = imageFile.getOriginalFilename();
+			String hashedImageName = generateNewFileName(imageName);
+			Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
+			copyImageFile(imageFile, filePath);
+			house.setImageName(hashedImageName);
+		}
+		
+		house.setName(houseEditForm.getName());
+		house.setDescription(houseEditForm.getDescription());
+		house.setPrice(houseEditForm.getPrice());
+		house.setCapacity(houseEditForm.getCapacity());
+		house.setPostalCode(houseEditForm.getPostalCode());
+		house.setAddress(houseEditForm.getAddress());
+		house.setPhoneNumber(houseEditForm.getPhoneNumber());
 		
 		houseRepository.save(house);
 	}
@@ -52,8 +77,8 @@ public class HouseService {
 		for(int i = 0; i < fileNames.length - 1; i++) {
 			fileNames[i] = UUID.randomUUID().toString();
 		}
-		String hashdFileName = String.join(".", fileNames);
-		return hashdFileName;
+		String hashedFileName = String.join(".", fileNames);
+		return hashedFileName;
 	}
 	
 	//画像ファイルを指定したファイルにコピーする
@@ -65,4 +90,3 @@ public class HouseService {
 		}
 	}
 }
-
