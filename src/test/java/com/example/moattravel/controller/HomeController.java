@@ -1,4 +1,4 @@
-package com.example.moattravel.controller;
+/*package com.example.moattravel.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,3 +10,4 @@ public class HomeController {
 		return "index";
 	}
 }
+*/
