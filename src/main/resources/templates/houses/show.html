@@ -51,7 +51,7 @@
 										</div>
 									</div>
 									
-									<div class="row  pb-2 mb-2 border-bottom">
+									<div class="row pb-2 mb-2 border-bottom">
 										<div class="col-4">
 											<span class="fw-bold">説明</span>
 										</div>
@@ -61,7 +61,7 @@
 										</div>
 									</div>
 									
-									<div class="row  pb-2 mb-2 border-bottom">
+									<div class="row pb-2 mb-2 border-bottom">
 										<div class="col-4">
 											<span class="fw-bold">宿泊料金</span>
 										</div>
@@ -71,7 +71,7 @@
 										</div>
 									</div>
 									
-									<div class="row  pb-2 mb-2 border-bottom">
+									<div class="row pb-2 mb-2 border-bottom">
 										<div class="col-4">
 											<span class="fw-bold">定員</span>
 										</div>
@@ -81,7 +81,7 @@
 										</div>
 									</div>
 									
-									<div class="row  pb-2 mb-2 border-bottom">
+									<div class="row pb-2 mb-2 border-bottom">
 										<div class="col-4">
 											<span class="fw-bold">郵便番号</span>
 										</div>
@@ -91,7 +91,7 @@
 										</div>
 									</div>
 									
-									<div class="row  pb-2 mb-2 border-bottom">
+									<div class="row pb-2 mb-2 border-bottom">
 										<div class="col-4">
 											<span class="fw-bold">住所</span>
 										</div>
@@ -101,9 +101,9 @@
 										</div>
 									</div>
 									
-									<div class="row  pb-2 mb-2 border-bottom">
+									<div class="row pb-2 mb-2 border-bottom">
 										<div class="col-4">
-											<span class="fw-bold">郵便番号</span>
+											<span class="fw-bold">電話番号</span>
 										</div>
 										
 										<div class="col">
@@ -115,8 +115,32 @@
 								<div sec:authorize="isAnonymous()" class="col-lg-4 px-0 ps-lg-4 mb-4">
 									<div class="card">
 										<div class="card-body">
-											<p class="card-text">予約するには<a href="@{/login}">ログイン</a>が必要です。</p>
+											<p class="card-text">予約するには<a th:href="@{/login}">ログイン</a>が必要です。</p>
 											<button type="submit" class="btn text-white shadow-sm w-100 moattravel-btn" disabled>予約する</button>
+										</div>
+									</div>
+								</div>
+								
+								<div sec:authorize="isAuthenticated()" class="col-lg-4 px-0 ps-lg-4 mb-4">
+									<div class="card">
+										<div class="card-body">
+											<form method="get" th:action="@{/houses/__${house.getId()}__/reservations/input}" th:object="${reservationInputForm}">
+												<div class="form-group mb-2">
+													<label for="fromCheckinDateToCheckoutDate" class="col-form-label text-md-left fw-bold">チェックイン・チェックアウト</label>
+													<div th:if="${#fields.hasErrors('fromCheckinDateToCheckoutDate')}" class="text-danger small mb-2" th:errors="*{fromCheckinDateToCheckoutDate}"></div>
+													<input type="text" class="form-control" th:field="*{fromCheckinDateToCheckoutDate}">
+												</div>
+												
+												<div class="form-group mb-4">
+													<label for="numberOfPeople" class="col-form-label text-md-left fw-bold">宿泊人数</label>
+													<div th:if="${#fields.hasErrors('numberOfPeople')}" class="text-danger small mb-2" th:errors="*{numberOfPeople}"></div>
+													<input type="number" class="form-control" th:field="*{numberOfPeople}" min="1">
+												</div>
+												
+												<div class="form-group">
+													<button type="submit" class="btn text-white shadow-sm w-100 moattravel-btn">予約する</button>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -134,7 +158,7 @@
 	<div th:replace="~{fragment :: scripts}"></div>
 	
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-	<script th:src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
 	<script th:src="@{/js/flatpickr.js}"></script>
 </body>
 </html>
