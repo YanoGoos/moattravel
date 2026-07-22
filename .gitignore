@@ -3,6 +3,8 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/moattravel/src/main/resources/application.properties
+/moattravel/src/main/resources/static/js/stripe.js
 
 ### STS ###
 .apt_generated
