@@ -29,7 +29,7 @@ public class StripeWebhookController {
 	}
 	
 	@PostMapping("/stripe/webhook")
-	public ResponseEntity<String> webhook(@RequestBody String payload, @RequestHeader("Stripe-signature") String sigHeader) {
+	public ResponseEntity<String> webhook(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
 		Stripe.apiKey = stripeApiKey;
 		Event event = null;
 		
@@ -38,11 +38,13 @@ public class StripeWebhookController {
 		} catch (SignatureVerificationException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
-		
 		if ("checkout.session.completed".equals(event.getType())) {
 			stripeService.processSessionCompleted(event);
 		}
-		
+		if ("checkout.session.completed".equals(event.getType())) {
+		    stripeService.processSessionCompleted(event);
+		}
+
 		return new ResponseEntity<>("Success", HttpStatus.OK);
 	}
 }

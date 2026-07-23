@@ -76,7 +76,6 @@ public class StripeService {
 		optionalStripeObject.ifPresent(stripeObject -> {
 			Session session = (Session)stripeObject;
 			SessionRetrieveParams params = SessionRetrieveParams.builder().addExpand("payment_intent").build();
-			
 			try {
 				session = Session.retrieve(session.getId(), params, null);
 				Map<String, String> paymentIntentObject = session.getPaymentIntentObject().getMetadata();
