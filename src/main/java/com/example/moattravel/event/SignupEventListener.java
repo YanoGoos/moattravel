@@ -37,4 +37,18 @@ public class SignupEventListener {
 		mailMessage.setText(message + "\n" + confirmationUrl);
 		javaMailSender.send(mailMessage);
 	}
+	//
+	@EventListener
+	public void testMail(String Message) {
+		
+		String recipientAddress = "kotomi.yano@goos.jp";
+		String subject = "メール認証";
+		String message = Message;
+		
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(recipientAddress);
+		mailMessage.setSubject(subject);
+		mailMessage.setText(message);
+		javaMailSender.send(mailMessage);
+	}
 }
